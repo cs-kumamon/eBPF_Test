@@ -8,4 +8,7 @@ set -euo pipefail
 ip link del veth0 2>/dev/null || true
 ip link del veth1 2>/dev/null || true
 
+sudo ip addr del 10.10.1.1/24 dev enp0s3
+sudo ip addr del 10.10.1.2/24 dev enp0s3
+
 echo "cleanup done"
