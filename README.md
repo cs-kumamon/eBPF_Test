@@ -7,6 +7,7 @@
 - 动态获取下一跳 MAC（Netlink 监听邻居变化）
 - TC egress 挂载，适配本机发起流量
 - 自动触发 ARP 请求（邻居缺失时）
+- 进程退出自动 detach（可配置）
 - 兼容已有 tc filter（自动尝试新的 handle/prio）
 
 ## 目录结构
@@ -25,7 +26,7 @@ sudo ./scripts/run.sh
 
 如果需要挂载到指定出口（如 `enp0s3`）：
 ```bash
-sudo ATTACH_DEVS=enp0s3 ./scripts/run.sh
+sudo ATTACH_EGRESS_DEVS=enp0s3 ./scripts/run.sh
 ```
 
 ## 适用场景提示
@@ -35,7 +36,7 @@ sudo ATTACH_DEVS=enp0s3 ./scripts/run.sh
 - 保持默认路由由系统选择
 - 在默认路由出口（如 `enp0s3`）做 BPF 重定向
 
-详细使用说明见：`docs/USAGE.md`
+详细使用说明见：`docs/USAGE.md`（含配置文件说明与 `config/tc_router.conf` 示例）
 
 ## 编译依赖
 - clang / llvm
@@ -50,7 +51,7 @@ sudo apt-get install -y clang llvm libbpf-dev pkg-config libelf-dev zlib1g-dev
 
 ## 卸载
 ```bash
-sudo ./tc_router --detach --attach-devs enp0s3 --devs veth0,veth1
+sudo ./tc_router --config config/tc_router_detach.conf
 ```
 
 ## 许可
